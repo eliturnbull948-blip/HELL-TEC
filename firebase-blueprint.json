@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A clothing product in the store",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "description": { "type": "string" },
+        "images": { "type": "array", "items": { "type": "string" } },
+        "sizes": { "type": "array", "items": { "type": "string" } },
+        "isComingSoon": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "price", "images"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Global store settings",
+      "type": "object",
+      "properties": {
+        "etransferEmail": { "type": "string" },
+        "showComingSoonBox": { "type": "boolean" }
+      }
+    },
+    "Member": {
+      "title": "Member",
+      "description": "A user who has joined the membership",
+      "type": "object",
+      "properties": {
+        "phoneNumber": { "type": "string" },
+        "joinedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["phoneNumber"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Store products"
+    },
+    "/settings/global": {
+      "schema": "Settings",
+      "description": "Global settings"
+    },
+    "/members/{memberId}": {
+      "schema": "Member",
+      "description": "Membership leads"
+    }
+  }
+}

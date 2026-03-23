@@ -1,0 +1,75 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: products
+    // Document ID: productId
+    // Fields:
+    //   - name: string (1-100 chars)
+    //   - price: number (> 0)
+    //   - description: string (0-1000 chars)
+    //   - images: list of strings (max 10)
+    //   - sizes: list of strings (max 10)
+    //   - isComingSoon: bool
+    //   - createdAt: timestamp
+    //
+    // Collection: settings
+    // Document ID: global
+    // Fields:
+    //   - etransferEmail: string
+    //   - showComingSoonBox: bool
+    //   - brandName: string
+    //   - brandSubtitle: string
+    //   - landingTitle: string
+    //   - landingSubtitle: string
+    //   - successTitle: string
+    //   - successSubtitle: string
+    //
+    // Collection: members
+    // Document ID: memberId
+    // Fields:
+    //   - phoneNumber: string (10-20 chars)
+    //   - joinedAt: timestamp
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (request.auth.token.email == "eliturnbull948@gmail.com" && request.auth.token.email_verified == true);
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    // ===============================================================
+    // Collection Rules
+    // ===============================================================
+
+    match /products/{productId} {
+      allow read: if true; // Publicly viewable
+      allow write: if isAdmin();
+    }
+
+    match /settings/global {
+      allow read: if true; // Publicly viewable
+      allow write: if isAdmin();
+    }
+
+    match /members/{memberId} {
+      allow read: if isAdmin();
+      allow create: if true; // Anyone can join
+      allow update, delete: if isAdmin();
+    }
+  }
+}

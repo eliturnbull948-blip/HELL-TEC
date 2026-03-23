@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  body {
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.4) 0%, transparent 40%),
+      linear-gradient(135deg, 
+        #f8f9fa 0%, 
+        #e9ecef 15%, 
+        #dee2e6 30%, 
+        #f8f9fa 45%, 
+        #ced4da 60%, 
+        #e9ecef 75%, 
+        #f8f9fa 100%
+      );
+    background-size: 400% 400%;
+    animation: marble-flow 20s ease-in-out infinite;
+    @apply min-h-screen text-zinc-900 selection:bg-black selection:text-white;
+  }
+}
+
+@layer utilities {
+  .chrome-text {
+    background: linear-gradient(
+      to bottom,
+      #555 0%,
+      #777 25%,
+      #bbb 48%,
+      #444 52%,
+      #888 75%,
+      #555 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.05));
+  }
+
+  .chrome-marble {
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.3) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.3) 0%, transparent 40%),
+      linear-gradient(135deg, 
+        #f8f9fa 0%, 
+        #f1f3f5 15%, 
+        #e9ecef 30%, 
+        #f8f9fa 45%, 
+        #dee2e6 60%, 
+        #e9ecef 75%, 
+        #f8f9fa 100%
+      );
+    background-size: 400% 400%;
+    animation: marble-flow 20s ease-in-out infinite;
+  }
+
+  .chrome-bg {
+    background: linear-gradient(
+      135deg,
+      #333 0%,
+      #555 25%,
+      #999 48%,
+      #333 52%,
+      #777 75%,
+      #333 100%
+    );
+    background-size: 200% 200%;
+    transition: background-position 0.5s ease;
+  }
+  
+  .chrome-bg:hover {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes marble-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
